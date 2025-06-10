@@ -570,7 +570,7 @@ header .container {
 
 @media (max-width: 1024px) {
     .program-grid {
-        grid-template-columns: 1fr;
+        /* grid-template-columns: 1fr; */
     }
     
     .cta-buttons {

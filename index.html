@@ -45,13 +45,12 @@
     <!-- Add SDKs for Firebase products that you want to use -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
     <!-- Firebase Configuration -->
     <script src="backend/scripts/firebase-config.js"></script>
 
     <!-- JS Scripts (Deferred for performance) -->
     <script src="/scripts/main.js" defer></script>
-    <script src="/scripts/whatsapp.js" defer></script>
+    <script src="/scripts/home-interactive.js" defer></script>
     <script src="/frontend/scripts/accreditations-loader.js" defer></script>
     <script src="/frontend/scripts/global-connections-loader.js" defer></script>
     <script src="/frontend/scripts/homepage-centers-loader.js" defer></script>
@@ -306,7 +305,6 @@
     // Initial call on DOMContentLoaded might be too early if slides are dynamic
     // It's better to call it after slides are loaded and slider is initialized.
 
-</script>
   <script src="backend/scripts/home-content.js"></script>
   
 <!-- Why Choose Us -->
@@ -380,81 +378,6 @@
         </div>
     </section>
 
-    <script>
-                document.addEventListener('DOMContentLoaded', function () {
-                    const slider = document.querySelector('.program-cards');
-                    const prevBtn = document.getElementById('prev-control');
-                    const nextBtn = document.getElementById('next-control');
-
-                    if (!slider || !prevBtn || !nextBtn) return;
-
-                    // Helper to get current cards (since they're loaded dynamically)
-                    function getCards() {
-                        return slider.querySelectorAll('.program-card');
-                    }
-
-                    let currentIndex = 0;
-
-                    // Ensure the container has horizontal scroll and no wrapping
-                    slider.style.display = 'flex';
-                    slider.style.overflowX = 'auto';
-                    slider.style.scrollBehavior = 'smooth';
-
-                    // Set min-width for each card so only one fully visible at a time (optional, adjust as needed)
-                    function styleCards() {
-                        getCards().forEach(card => {
-                            card.style.minWidth = '300px';
-                            card.style.flex = '0 0 auto';
-                        });
-                    }
-
-                    // Call styleCards initially and whenever cards are (re)loaded
-                    const observer = new MutationObserver(() => {
-                        styleCards();
-                    });
-                    observer.observe(slider, { childList: true });
-
-                    styleCards();
-
-                    function scrollToCard(index) {
-                        const cards = getCards();
-                        if (cards.length === 0) return;
-                        if (index < 0) index = 0;
-                        if (index > cards.length - 1) index = cards.length - 1;
-                        currentIndex = index;
-                        cards[index].scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
-                    }
-
-                    nextBtn.addEventListener('click', () => {
-                        const cards = getCards();
-                        if (currentIndex < cards.length - 1) {
-                            scrollToCard(currentIndex + 1);
-                        }
-                    });
-
-                    prevBtn.addEventListener('click', () => {
-                        if (currentIndex > 0) {
-                            scrollToCard(currentIndex - 1);
-                        }
-                    });
-
-                    // Optional: update currentIndex on manual scroll
-                    slider.addEventListener('scroll', () => {
-                        const cards = getCards();
-                        let closest = 0;
-                        let minDiff = Infinity;
-                        cards.forEach((card, i) => {
-                            const diff = Math.abs(card.getBoundingClientRect().left - slider.getBoundingClientRect().left);
-                            if (diff < minDiff) {
-                                minDiff = diff;
-                                closest = i;
-                            }
-                        });
-                        currentIndex = closest;
-                    });
-                });
-    </script>
-
 <!-- We are Apollo -->
 <section class="apollo-section">
     <div class="container">
@@ -482,50 +405,6 @@
     </div>
 </section>
 
-
-<!-- We are Apollo Section Script -->
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const counters = document.querySelectorAll('.counter');
-        const duration = 2000; // Total duration for all counters to finish
-        let started = false;
-
-        const startCounters = () => {
-            const startTime = performance.now();
-
-            const updateCounters = () => {
-                const elapsedTime = performance.now() - startTime;
-                const progress = Math.min(elapsedTime / duration, 1);
-
-                counters.forEach(counter => {
-                    const target = +counter.getAttribute('data-target');
-                    const value = Math.floor(target * progress);
-                    counter.innerText = value + (progress === 1 ? "+" : "");
-                });
-
-                if (progress < 1) {
-                    requestAnimationFrame(updateCounters);
-                }
-            };
-
-            updateCounters();
-        };
-
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && !started) {
-                    started = true;
-                    startCounters();
-                }
-            });
-        });
-
-        const statsSection = document.querySelector('.apollo-stats');
-        if (statsSection) {
-            observer.observe(statsSection);
-        }
-    });
-</script>
 
             
     <!-- Our Centres -->

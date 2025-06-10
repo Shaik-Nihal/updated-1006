@@ -2,20 +2,696 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>Apollo Allied Health Academy CMS Dashboard</title>
+    <link rel="icon" href="/images/favicon-apkn.png" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard | Apollo Knowledge</title>
-    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts for clean look -->
+    <link href="https://fonts.googleapis.com/css?family=Inter:400,600&display=swap" rel="stylesheet">
+    <script src="dashboard.js"></script>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    <style>
+        /* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f8fafc;
+    color: #334155;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Header Styles */
+.header {
+    background: linear-gradient(135deg, #1e3b36 0%, #335355 100%);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    height: 70px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Logo Section */
+.logo {
+    display: flex;
+    align-items: center;
+    color: white;
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: 1px;
+    min-width: 40px;
+    height: 70px;
+}
+
+.logo img {
+    width: 140px;
+    height: auto;
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
+    border: none;
+    display: block;
+    margin: auto 0;
+}
+
+/* Navigation */
+nav {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.nav-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    backdrop-filter: blur(10px);
+}
+
+.nav-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    transform: translateY(-1px);
+}
+
+.nav-btn.active {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(59, 196, 246, 0.3);
+}
+
+/* Logout Button */
+.logout-btn {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+}
+
+.logout-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+}
+
+/* Main Content */
+main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+    min-height: calc(100vh - 70px);
+}
+
+/* Section Headers */
+section h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+section h2::before {
+    content: '';
+    width: 4px;
+    height: 28px;
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    border-radius: 2px;
+}
+
+/* View Live Site Link */
+.view-live-site {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.view-live-site:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
+/* Dashboard Overview Grid */
+.dashboard-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+/* Dashboard Widgets */
+.dashboard-widget {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.dashboard-widget::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+}
+
+.dashboard-widget:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.widget-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+.widget-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 4px;
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.dashboard-widget h3 {
+    font-size: 14px;
+    font-weight: 500;
+    color: #64748b;
+}
+
+/* Analytics Section */
+.dashboard-analytics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.analytics-card {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e2e8f0;
+}
+
+.analytics-card h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #f1f5f9;
+}
+
+.analytics-iframe {
+    width: 100%;
+    height: 300px;
+    border: none;
+    border-radius: 8px;
+    background: #f8fafc;
+}
+
+.analytics-bar {
+    width: 100%;
+    height: 300px;
+}
+
+/* Form and List Container */
+.form-and-list-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+/* Form Container */
+.form-container {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e2e8f0;
+    height: fit-content;
+}
+
+.form-container h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #f1f5f9;
+}
+
+/* Form Styles */
+.input-group {
+    margin-bottom: 1.5rem;
+}
+
+.input-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 0.5rem;
+}
+
+.input-group input,
+.input-group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background: #ffffff;
+}
+
+.input-group input:focus,
+.input-group textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.input-group small {
+    display: block;
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 0.25rem;
+}
+
+/* Form Actions */
+.form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 2rem;
+}
+
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.btn-secondary {
+    background: #f1f5f9;
+    color: #64748b;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-secondary:hover {
+    background: #e2e8f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* List Container */
+.list-container {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e2e8f0;
+    height: fit-content;
+}
+
+.list-container h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #f1f5f9;
+}
+
+/* List Styles */
+ul {
+    list-style: none;
+}
+
+.list-item-placeholder {
+    padding: 1rem;
+    background: #f8fafc;
+    border-radius: 8px;
+    color: #64748b;
+    text-align: center;
+    font-style: italic;
+}
+
+/* Message Styles */
+[id$="-message"] {
+    margin-top: 1rem;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.success-message {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #16a34a;
+}
+
+.error-message {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .header-content {
+        padding: 0 1rem;
+        flex-wrap: wrap;
+        height: auto;
+        min-height: 70px;
+        gap: 1rem;
+    }
+    
+    nav {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        padding: 1rem 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .form-and-list-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .dashboard-analytics {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    main {
+        padding: 1rem;
+    }
+    
+    .dashboard-overview {
+        grid-template-columns: 1fr;
+    }
+    
+    .nav-btn {
+        font-size: 12px;
+        padding: 8px 12px;
+    }
+    
+    .form-container,
+    .list-container {
+        padding: 1.5rem;
+    }
+    
+    .widget-value {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-content {
+        padding: 0 0.5rem;
+    }
+    
+    .logo {
+        font-size: 16px;
+    }
+    
+    .logo img {
+        width: 32px;
+        height: 32px;
+    }
+    
+    nav {
+        gap: 2px;
+    }
+    
+    .nav-btn {
+        font-size: 11px;
+        padding: 6px 8px;
+    }
+    
+    section h2 {
+        font-size: 24px;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: #0f172a;
+        color: #e2e8f0;
+    }
+    
+    .dashboard-widget,
+    .analytics-card,
+    .form-container,
+    .list-container {
+        background: #1e293b;
+        border-color: #334155;
+    }
+    
+    .input-group input,
+    .input-group textarea {
+        background: #334155;
+        border-color: #475569;
+        color: #e2e8f0;
+    }
+    
+    .list-item-placeholder {
+        background: #334155;
+        color: #94a3b8;
+    }
+}
+
+/* Loading States */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+    position: relative;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid #e5e7eb;
+    border-top: 2px solid #3b82f6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Accessibility */
+.nav-btn:focus,
+.btn:focus,
+.input-group input:focus,
+.input-group textarea:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+    .header,
+    .form-actions,
+    .logout-btn {
+        display: none;
+    }
+    
+    main {
+        padding: 0;
+    }
+    
+    .dashboard-widget,
+    .analytics-card {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+}
+    </style>
 </head>
 <body>
-    <header class="dashboard-header">
-        <div class="container">
-            <h1>Admin Dashboard</h1>
-            <button id="logout-button" class="btn btn-danger">Logout</button>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <img src="/images/ak_logo.png" alt="Apollo Logo">
+            </div>
+            <nav>
+                <button class="nav-btn active" data-section="dashboard-home">Dashboard</button>
+                <button class="nav-btn" data-section="hero-section-management">Hero Slides</button>
+                <button class="nav-btn" data-section="programs-hero-management">Programs Hero</button>
+                <button class="nav-btn" data-section="hp-ourprograms-meta-management">Programs Meta</button>
+                <button class="nav-btn" data-section="program-cards-management">Program Cards</button>
+                <button class="nav-btn" data-section="accreditations-management">Accreditations</button>
+                <button class="nav-btn" data-section="global-connections-management">Global Connections</button>
+                <button class="nav-btn" data-section="centers-list-management">Centers</button>
+            </nav>
+            <button id="logout-button" class="logout-btn">Logout</button>
         </div>
     </header>
 
-    <main class="container dashboard-main">
-        <section id="hero-section-management">
+    <main>
+        <!-- Dashboard Home (Analytics Widgets) -->
+        <section id="dashboard-home">
+            <a class="view-live-site" href="/" target="_blank">View Live Site</a>
+            <h2>Dashboard Overview</h2>
+            <div class="dashboard-overview">
+            <div class="dashboard-widget">
+                <div class="widget-label">Google Analytics</div>
+                <div class="widget-value" id="widget-site-views">0</div>
+                <h3>Site Views</h3>
+            </div>
+            <div class="dashboard-widget">
+                <div class="widget-label">Avg. Load Time</div>
+                <div class="widget-value" id="widget-performance">-</div>
+                <h3>Performance</h3>
+            </div>
+            <div class="dashboard-widget">
+                <div class="widget-label">User Interactions</div>
+                <div class="widget-value" id="widget-clicks">0</div>
+                <h3>Clicks</h3>
+            </div>
+            <div class="dashboard-widget">
+                <div class="widget-label"></div>
+                <div class="widget-value" id="widget-hero-slides">0</div>
+                <h3>Total Hero Slides</h3>
+            </div>
+            <div class="dashboard-widget">
+                <div class="widget-label"></div>
+                <div class="widget-value" id="widget-programs">0</div>
+                <h3>Total Programs</h3>
+            </div>
+            <div class="dashboard-widget">
+                <div class="widget-label"></div>
+                <div class="widget-value" id="widget-program-cards">0</div>
+                <h3>Program Cards</h3>
+            </div>
+            <div class="dashboard-widget">
+                <div class="widget-label"></div>
+                <div class="widget-value" id="widget-accreditations">0</div>
+                <h3>Accreditations</h3>
+            </div>
+            <div class="dashboard-widget">
+                <div class="widget-label"></div>
+                <div class="widget-value" id="widget-global-connections">0</div>
+                <h3>Global Connections</h3>
+            </div>
+            <div class="dashboard-widget">
+                <div class="widget-label"></div>
+                <div class="widget-value" id="widget-centers">0</div>
+                <h3>Centers</h3>
+            </div>
+            </div>
+            <div class="dashboard-analytics">
+            <div class="analytics-card">
+                <h4>Site Views (Google Analytics)</h4>
+                <!-- Replace src with your Google Analytics embed -->
+                <iframe class="analytics-iframe" src="https://datastudio.google.com/embed/reporting/1d2e3f4g5h6i7j8k9l/page/1M" allowfullscreen></iframe>
+            </div>
+            <div class="analytics-card">
+                <h4>Site Performance (Bar Graph)</h4>
+                <canvas id="performance-bar-graph" class="analytics-bar"></canvas>
+            </div>
+            <div class="analytics-card">
+                <h4>Clicks & Interactions</h4>
+                <iframe class="analytics-iframe" src="https://datastudio.google.com/embed/reporting/2a3b4c5d6e7f8g9h0i/page/1M" allowfullscreen></iframe>
+            </div>
+            <div class="analytics-card">
+                <h4>Traffic Sources</h4>
+                <iframe class="analytics-iframe" src="https://datastudio.google.com/embed/reporting/3a4b5c6d7e8f9g0h1i/page/1M" allowfullscreen></iframe>
+            </div>
+            </div>
+        </section>
+
+       <section id="hero-section-management">
             <h2>Hero Section Slides</h2>
             <p>Manage slides for the homepage hero carousel.</p>
 
@@ -351,10 +1027,110 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
-    <!-- Firebase Configuration -->
-    <!-- <script src="/backend/scripts/firebase-config.js"></script> -->
     <script src="../scripts/firebase-config.js"></script>
-    <!-- Admin Dashboard Script -->
     <script src="dashboard.js"></script>
+    <!-- Chart.js for bar graph -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Navigation logic for dashboard sections
+        document.querySelectorAll('nav .nav-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('nav .nav-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                document.querySelectorAll('main > section').forEach(sec => sec.style.display = 'none');
+                const sectionId = this.getAttribute('data-section');
+                const section = document.getElementById(sectionId);
+                if (section) section.style.display = '';
+            });
+        });
+
+        // Utility to get average from localStorage
+        function updateAverageLoadTime(newTime) {
+            let times = JSON.parse(localStorage.getItem('siteLoadTimes') || '[]');
+            times.push(newTime);
+            if (times.length > 20) times = times.slice(-20); // keep last 20 loads
+            localStorage.setItem('siteLoadTimes', JSON.stringify(times));
+            const avg = times.length ? (times.reduce((a, b) => a + b, 0) / times.length) : 0;
+            return avg;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('dashboard-home').style.display = '';
+            document.querySelectorAll('main > section:not(#dashboard-home)').forEach(sec => sec.style.display = 'none');
+
+            // Calculate and display average load time in real-time
+            setTimeout(() => {
+                const perf = window.performance.timing;
+                let loadTime = 0;
+                if (perf.loadEventEnd && perf.navigationStart && perf.loadEventEnd > perf.navigationStart) {
+                    loadTime = (perf.loadEventEnd - perf.navigationStart) / 1000;
+                } else {
+                    loadTime = (performance.now() / 1000);
+                }
+                const avgLoadTime = updateAverageLoadTime(loadTime);
+                document.getElementById('widget-performance').textContent = avgLoadTime && !isNaN(avgLoadTime) ? avgLoadTime.toFixed(2) + 's' : '0.00s';
+            }, 100);
+
+            // Google Analytics site views (using Google Analytics Data API via backend)
+            // Replace the fetch URL with your backend endpoint that returns site views
+            fetch('https://your-backend.example.com/api/analytics/site-views')
+                .then(res => res.json())
+                .then(data => {
+                    let siteViews = data.siteViews || 0;
+                    document.getElementById('widget-site-views').textContent = siteViews;
+                })
+                .catch(() => {
+                    document.getElementById('widget-site-views').textContent = '0';
+                });
+
+            // Clicks (placeholder, set to 0 if not available)
+            let siteClicks = 0;
+            // If you fetch from backend, replace siteClicks with actual value
+            document.getElementById('widget-clicks').textContent = siteClicks;
+
+            // Bar graph for performance (showing last 4 load times)
+            const ctx = document.getElementById('performance-bar-graph').getContext('2d');
+            let times = JSON.parse(localStorage.getItem('siteLoadTimes') || '[]');
+            const last4 = times.slice(-4);
+            let barData = [0, 0, 0, 0];
+            if (last4.length === 4) {
+                barData = last4.map(t => Number(t).toFixed(2));
+            }
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Load 1', 'Load 2', 'Load 3', 'Load 4'],
+                    datasets: [{
+                        label: 'Load Time (s)',
+                        data: barData,
+                        backgroundColor: [
+                            'rgba(38,182,182,0.7)',
+                            'rgba(0,128,128,0.7)',
+                            'rgba(38,182,182,0.5)',
+                            'rgba(0,128,128,0.5)'
+                        ],
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { color: '#008080' },
+                            grid: { color: '#e0f2f1' }
+                        },
+                        x: {
+                            ticks: { color: '#008080' },
+                            grid: { color: '#e0f2f1' }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>

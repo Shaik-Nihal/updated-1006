@@ -4,9 +4,174 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login | Apollo Knowledge</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="/images/favicon-apkn.png" type="image/x-icon">
+    <!-- <link rel="stylesheet" href="style.css"> -->
+<style>
+    /* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(to bottom right, #f7f9fc, #e2ecf5);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Header with logo and title */
+.login-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo {
+    width: 200px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.portal-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #1a2b5c;
+}
+
+/* Login form container */
+.login-container {
+    background: #f7f9fc;
+    padding: 2px;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(26, 43, 92, 0.10);
+    max-width: 370px;
+    width: 100%;
+    margin: 0 auto;
+}
+.login-container > * {
+    background: #fff;
+    border-radius: 14px;
+    padding: 26px 18px 16px 18px;
+    box-shadow: 0 1px 4px rgba(26, 43, 92, 0.03);
+}
+
+/* Heading */
+h2 {
+    text-align: center;
+    color: #1a2b5c;
+    margin-bottom: 18px;
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+
+/* Input group */
+.input-group {
+    margin-bottom: 16px;
+}
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.97rem;
+    color: #1a2b5c;
+    font-weight: 500;
+}
+.input-group input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.2px solid #e2ecf5;
+    border-radius: 7px;
+    font-size: 1rem;
+    background: #f7f9fc;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.input-group input:focus {
+    border-color: #1a73e8;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.10);
+}
+
+/* Button style */
+.btn {
+    width: 100%;
+    background: #1a73e8;
+    color: #fff;
+    padding: 11px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+    box-shadow: 0 1px 4px rgba(26, 115, 232, 0.07);
+    margin-top: 4px;
+}
+.btn:hover, .btn:focus {
+    background: #125bc2;
+    box-shadow: 0 2px 8px rgba(26, 115, 232, 0.13);
+}
+
+/* Error message */
+.error-message {
+    margin-top: 10px;
+    color: #d93025;
+    font-size: 0.95rem;
+    text-align: center;
+    min-height: 20px;
+    font-weight: 500;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+.error-message:before {
+    content: "⚠️";
+    font-size: 1em;
+    margin-right: 3px;
+}
+.error-message.active {
+    opacity: 1;
+    animation: shake 0.25s;
+}
+@keyframes shake {
+    0%,100% { transform: translateX(0);}
+    20%,60% { transform: translateX(-4px);}
+    40%,80% { transform: translateX(4px);}
+}
+
+/* Autofill styles */
+input:-webkit-autofill {
+    box-shadow: 0 0 0 1000px #f7f9fc inset;
+    -webkit-text-fill-color: #1a2b5c;
+    border-radius: 7px;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .portal-title {
+        font-size: 1.2rem;
+    }
+    .login-container > * {
+        padding: 15px 5px 10px 5px;
+    }
+    .login-container {
+        padding: 1px;
+    }
+}
+
+</style>
 </head>
 <body>
+    <!-- Inside <body>, above <div class="login-container"> -->
+<header class="login-header">
+    <img src="/images/ak_logo.png" alt="Apollo Logo" class="logo">
+    <h1 class="portal-title">Apollo Allied Health Academy CMS Portal</h1>
+</header>
     <div class="login-container">
         <h2>Admin Login</h2>
         <form id="login-form">
@@ -19,7 +184,7 @@
                 <input type="password" id="password" name="password" required>
             </div>
             <button type="submit" class="btn">Login</button>
-            <p id="login-error" class="error-message"></p>
+            <p id="login-error" class="error-message">Login Error</p>
         </form>
     </div>
 

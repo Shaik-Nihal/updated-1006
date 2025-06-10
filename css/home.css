@@ -149,17 +149,6 @@
   color: #fff;
 }
 
-
-.whatsapp-btn {
-    background-color: #25D366; /* WhatsApp green */
-    color: white; /* Optional: Adjust text color */
-}
-
-
-
-
-
-
 @media (max-width: 1024px) {
   .hero {
     width: 100vw;

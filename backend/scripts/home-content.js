@@ -83,16 +83,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const p = document.createElement('p');
             p.textContent = data.paragraph || 'Default paragraph text.';
 
-            const a = document.createElement('a');
-            a.href = data.buttonUrl || '#';
-            // Assuming 'btn' and 'btn-primary' are your desired classes for styling
-            // If you use Tailwind, these might be different, e.g., 'py-2 px-4 bg-blue-500 text-white rounded-lg'
-            a.className = 'btn btn-primary'; // Use className for setting multiple classes
-            a.textContent = data.buttonText || 'Learn More';
-
+            // Append h1 and p first
             slideContentDiv.appendChild(h1);
             slideContentDiv.appendChild(p);
-            slideContentDiv.appendChild(a);
+
+            // const a = document.createElement('a'); // OLD BUTTON - REMOVE/COMMENT
+            // a.href = data.buttonUrl || '#'; // OLD BUTTON - REMOVE/COMMENT
+            // a.className = 'btn btn-primary'; // OLD BUTTON - REMOVE/COMMENT
+            // a.textContent = data.buttonText || 'Learn More'; // OLD BUTTON - REMOVE/COMMENT
+            // slideContentDiv.appendChild(a); // OLD BUTTON - REMOVE/COMMENT
 
             // Create and append new buttons
             const heroSlideButtonsDiv = document.createElement('div');
@@ -109,7 +108,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     const button = document.createElement('a');
                     button.href = buttonUrl;
                     button.textContent = buttonText;
-                    button.classList.add('btn', 'btn-secondary', `hero-action-btn-${i}`);
+                    if (i === 1) {
+                        button.classList.add('btn', 'btn-primary', `hero-action-btn-${i}`);
+                    } else {
+                        button.classList.add('btn', 'btn-secondary', `hero-action-btn-${i}`);
+                    }
                     // Optionally, add target="_blank" if these are external links
                     // button.target = '_blank';
                     heroSlideButtonsDiv.appendChild(button);

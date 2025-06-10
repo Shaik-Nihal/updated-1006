@@ -50,11 +50,11 @@ async function updateAllHeroSlides() {
 
             console.log(`Processing document ID: ${doc.id}`);
 
-            // Standard new buttons
-            updateData.button1_text = "Explore Programs";
-            updateData.button1_url = "/programs"; // Assuming this is the correct path
-            changesMade.push("Set button1_text to 'Explore Programs'");
-            changesMade.push("Set button1_url to '/programs'");
+            // // Standard new buttons
+            // updateData.button1_text = "Explore Programs";
+            // updateData.button1_url = "/programs"; // Assuming this is the correct path
+            // changesMade.push("Set button1_text to 'Explore Programs'");
+            // changesMade.push("Set button1_url to '/programs'");
 
             updateData.button2_text = "Whatsapp us";
             updateData.button2_url = "https://wa.me/911234567890"; // Placeholder

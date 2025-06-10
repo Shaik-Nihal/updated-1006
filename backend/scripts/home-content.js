@@ -110,8 +110,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     button.textContent = buttonText;
                     if (i === 1) {
                         button.classList.add('btn', 'btn-primary', `hero-action-btn-${i}`);
-                    } else {
+                    } else if (i === 2) {
                         button.classList.add('btn', 'btn-secondary', `hero-action-btn-${i}`);
+                    } else { // i === 3
+                        button.classList.add('btn', 'btn-whatsapp', `hero-action-btn-${i}`);
                     }
                     // Optionally, add target="_blank" if these are external links
                     // button.target = '_blank';
